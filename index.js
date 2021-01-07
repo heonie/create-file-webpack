@@ -2,6 +2,7 @@
 var CreateFilePlugin = (function () {
   const write = require('write');
   const path = require('path');
+  const _ = require('lodash');
 
   function CreateFilePlugin(options){
     if (options === void 0) {
@@ -23,15 +24,19 @@ var CreateFilePlugin = (function () {
     this.options = options;
   }
 
-  function _createFile(filePath, fileName, content) {
+  function _createFile(filePath, fileName, content, templateData) {
     return () => {
+      if(templateData) {
+        const compiled = _.template(content);
+        content = compiled(templateData);
+      }
       const fullPath = path.join(filePath, fileName);
       write.sync(fullPath, content);
     }
   }
 
   CreateFilePlugin.prototype.apply = function (compiler) {
-    const createFile = () => _createFile(this.options.path, this.options.fileName, this.options.content);
+    const createFile = () => _createFile(this.options.path, this.options.fileName, this.options.content, this.options.templateData || null);
 
     if (!!compiler.hooks) {
       compiler.hooks.done.tap('CreateFileWebpack', createFile());
