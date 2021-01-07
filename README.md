@@ -1,6 +1,8 @@
 # Create file plugin for WebPack
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
+Forked from https://github.com/Appius/create-file-webpack and modified.
+
 Very simple plugin to create a file at the end of the build process with the particular text.
 
 ## Installation
