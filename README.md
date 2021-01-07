@@ -25,12 +25,17 @@ const CreateFileWebpack = require('create-file-webpack')
 ## List of possible options:
 
 ````js
+const path = require('path');
+const fs = require('fs');
+
 var opts = {
     // path to folder in which the file will be created
     path: './dist',
     // file name
-    fileName: 'index.js',
+    fileName: 'generated.xml',
     // content of the file
-    content: 'export * from ./module.umd.js'
+    content: fs.readFileSync(path.join(__dirname, 'public/source.xml')),
+    // Data for interpolation of the content. See https://lodash.com/docs/4.17.15#template
+    templateData: JSON.parse(fs.readFileSync(path.join(__dirname, 'package.json')))
 };
 ````
